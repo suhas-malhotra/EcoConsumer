@@ -13,7 +13,11 @@ const carSchema = new Schema(
       type: Number,
       required: true,
     },
-    Dealer: {
+    price: {
+      type: Number,
+      required: true,
+    },
+    dealer: {
       type: String,
       required: true,
     },
@@ -22,7 +26,7 @@ const carSchema = new Schema(
       required: true,
       default: false,
     },
-    Client: {
+    client: {
       type: String,
     },
   },
