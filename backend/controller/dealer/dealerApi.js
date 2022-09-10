@@ -3,10 +3,32 @@ const JWT = require("jsonwebtoken");
 const Car = require("../../models/carModel");
 
 const Dealer = require("../../models/dealerModel");
-const Car = require("../../models/carModel");
+
+module.exports.register = async (req, res) => {
+  const { email, name, password } = req.body;
+
+  const DealerDetails = new Dealer({
+    email,
+    name,
+    password,
+  });
+
+  DealerDetails.save()
+    .then((response) => {
+      // If everything goes as planed
+      //use the retured user document for something
+      return res
+        .status(200)
+        .json({ msg: "Dealer saved Successfully :)", id: response._id });
+    })
+    .catch((error) => {
+      //When there are errors We handle them here
+      res.status(404).json({ msg: "Bad Request" });
+    });
+};
 
 module.exports.login = async (req, res) => {
-  const { email, name, password } = req.body;
+  const { email, password } = req.body;
   let dealer = await Dealer.find({
     email,
   });
@@ -19,7 +41,7 @@ module.exports.login = async (req, res) => {
     return res.status(401).json({ msg: "Incorrect password" });
   }
   //creating token for 365 days
-  const token = JWT.sign({ dealer }, process.env.SECRET_TOKEN_USER, {
+  const token = JWT.sign({ dealer }, process.env.SECRET_TOKEN_DEALER, {
     expiresIn: "365d",
   });
   dealer.push({ token: token });
@@ -61,7 +83,7 @@ module.exports.allCars = async (req, res) => {
   const { dealerId } = req.body;
 
   const cars = await Car.find({ dealer: dealerId, isBought: false });
-
+  console.log(cars);
   if (cars.length === 0) {
     return res.status(401).json({ msg: "No cars found" });
   }

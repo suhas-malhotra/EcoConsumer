@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // All Routes
-// app.use("/", require("./routes"));
+app.use("/", require("./routes"));
 
 //Default Route
 app.get("/", (req, res) => {

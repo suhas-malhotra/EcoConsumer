@@ -1,9 +1,11 @@
 const express = require("express");
-const userAPI = require("../../controllers/user/userApi");
-const { verifyTokenUser } = require("../../middleware/verifyToken");
+const userAPI = require("../../../controller/user/userApi");
+const { verifyTokenUser } = require("../../../middleware/verifyToken");
 const router = express.Router();
 
-router.post("/login", verifyTokenUser, userAPI.login);
+router.post("/register", userAPI.register);
+
+router.post("/login", userAPI.login);
 
 router.get("/all/cars", verifyTokenUser, userAPI.allCars);
 
