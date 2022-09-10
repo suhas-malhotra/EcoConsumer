@@ -83,7 +83,6 @@ module.exports.allCars = async (req, res) => {
   const { dealerId } = req.body;
 
   const cars = await Car.find({ dealer: dealerId, isBought: false });
-  console.log(cars);
   if (cars.length === 0) {
     return res.status(401).json({ msg: "No cars found" });
   }
