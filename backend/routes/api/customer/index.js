@@ -7,7 +7,7 @@ router.post("/register", userAPI.register);
 
 router.post("/login", userAPI.login);
 
-router.get("/all/cars", verifyTokenUser, userAPI.allCars);
+router.post("/all/cars", userAPI.allCars);
 
 router.post("/accept", verifyTokenUser, userAPI.acceptCar);
 

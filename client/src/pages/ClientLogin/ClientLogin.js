@@ -15,7 +15,7 @@ const ClientLogin = ({}) => {
       .then((response) => {
         if (response.status === 200) {
           localStorage.setItem("ClientToken", response.data[1].token);
-          localStorage.setItem("Client", response.data[0]);
+          localStorage.setItem("Client", response.data[0]._id);
           history("/client/portal");
           window.location.reload(false);
         }

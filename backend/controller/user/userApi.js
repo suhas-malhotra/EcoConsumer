@@ -60,7 +60,7 @@ module.exports.acceptCar = async (req, res) => {
   const { carId, clientId } = req.body;
 
   const car = await Car.findOne({ _id: carId });
-  if (car[0].isBought) {
+  if (car.isBought) {
     return res
       .status(401)
       .json({ msg: "Car already Sold , please referesh the page" });
@@ -74,7 +74,7 @@ module.exports.acceptCar = async (req, res) => {
     }
   );
 
-  const dealer = await Dealer.findOne({ _id: car[0].dealer });
+  const dealer = await Dealer.findOne({ _id: car.dealer });
 
   return res.status(200).json(dealer.name);
 };

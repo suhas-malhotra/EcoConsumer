@@ -23,7 +23,11 @@ function App() {
             <Route exact path="/client/login" element={<ClientLogin />} />
           )}
           {!DealerToken && ClientToken && (
-            <Route exact path="/client/portal" element={<ClientPortal />} />
+            <Route
+              exact
+              path="/client/portal"
+              element={<ClientPortal ClientToken={ClientToken} />}
+            />
           )}
           {DealerToken && !ClientToken && (
             <Route
