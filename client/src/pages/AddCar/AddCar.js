@@ -8,11 +8,13 @@ const AddCar = ({ DealerToken }) => {
   const [year, setYear] = useState("");
   const [price, setPrice] = useState("");
   const [dealer, setDealer] = useState("");
+  const [error, setError] = useState("");
 
   const submitRequest = async () => {
     const id = localStorage.getItem("Dealer");
     setDealer(id);
-    if (!name || !model || !year || !price || !dealer) {
+    if (!name || !model || !year || !price) {
+      setError("Please fill all the details");
       return;
     }
 
@@ -34,7 +36,7 @@ const AddCar = ({ DealerToken }) => {
         }
       })
       .catch((error) => {
-        console.log("error", error);
+        setError(error.response.data.msg);
       });
   };
   return (
@@ -43,6 +45,25 @@ const AddCar = ({ DealerToken }) => {
         <div classNameName="row">
           <div classNameName="col-12">
             <form>
+              {error && (
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  <strong>{error}</strong>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                    onClick={() => {
+                      setError("");
+                    }}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              )}
               <div className="form-group">
                 <label for="exampleInputEmail1">Car Name</label>
                 <input

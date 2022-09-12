@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { EmailValidator, PasswordValidator } from "../../Validators";
 const DealerLogin = ({}) => {
   const history = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [error, setError] = useState("");
   const submitRequest = async () => {
+    if (!email || !password) {
+      setError("Please fill all the details");
+      return;
+    }
+    if (!EmailValidator(email) || !PasswordValidator(password)) {
+      setError("Invalid Details");
+      return;
+    }
     const res = await axios
       .post("http://localhost/api/dealer/login", {
         email,
@@ -21,15 +30,34 @@ const DealerLogin = ({}) => {
         }
       })
       .catch((error) => {
-        console.log("error", error);
+        setError(error.response.data.msg);
       });
   };
   return (
     <div>
-      <div classNameName="container">
-        <div classNameName="row">
-          <div classNameName="col-12">
+      <div className="container">
+        <div className="row">
+          <div className="col-12">
             <form>
+              {error && (
+                <div
+                  class="alert alert-danger alert-dismissible fade show"
+                  role="alert"
+                >
+                  <strong>{error}</strong>
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                    onClick={() => {
+                      setError("");
+                    }}
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+              )}
               <div className="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input
